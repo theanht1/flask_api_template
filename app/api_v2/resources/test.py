@@ -1,0 +1,43 @@
+"""
+This module is only for unit testing
+"""
+
+from . import GetRequestTemplateV2, PostRequestTemplateV2
+from app.commons.decorators.authentication import required_basic_authentication
+
+from .. import api
+
+__resource_name__ = '/tests'
+
+
+class GetTest(GetRequestTemplateV2):
+    def main_logic(self):
+        self.response_message = 'Tested successfully'
+        self.response_data = {
+            'message': 'Just for testing'
+        }
+
+
+class PostTest(PostRequestTemplateV2):
+    def main_logic(self):
+        self.response_message = 'Tested successfully'
+        self.response_data = {
+            'message': 'Just for testing post method'
+        }
+
+
+@api.route('{}'.format(__resource_name__), methods=['GET'])
+def get_test():
+    test = GetTest()
+
+    return test.request_handler()
+
+
+@api.route('{}'.format(__resource_name__), methods=['POST'])
+def post_test():
+    test = PostTest()
+
+    required_params = ['test1', 'test2']
+    optional_params = ['opt_test1']
+
+    return test.request_handler(required_params=required_params, optional_params=optional_params)

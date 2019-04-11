@@ -10,18 +10,19 @@ class _StatusCode:
 
 class _ErrorStatus:
     NOT_FOUND = "NOT FOUND"
-    NOT_ALLOWED = "METHOD NOT ALLOWED"
+    NOT_ALLOWED = "METHOD WAS NOT ALLOWED"
     FAILURE = "FAILURE"
     UNAUTHORIZED = "UNAUTHORIZED"
 
 
 class ErrorMessage:
-    EMPTY_POST_DATA = "POST data is required"
+    EMPTY_POST_DATA = 'POST data is required'
+    ERROR = "ERROR"
 
 
 class _BaseException(Exception):
     status_code = 0
-    status_message = "ERROR"
+    status_message = ErrorMessage.ERROR
 
     def __init__(self, message, status_code=None, status_message=None, payload=None):
         self.message = message

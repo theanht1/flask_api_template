@@ -1,0 +1,2 @@
+ENV = 'testing'
+TESTING = True
