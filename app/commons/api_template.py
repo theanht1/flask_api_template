@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, current_app
 from app.commons.exceptions import ErrorMessage, InvalidUsage
 
 from config import Config
@@ -8,7 +8,7 @@ class ServiceInvalidUsage(InvalidUsage):
     def __init__(self, message, status_code=None, status_message=None, payload=None):
         _payload = dict(payload or ())
         _payload['_meta'] = {
-            'service_name': Config.SERVICE_NAME
+            'service_name': current_app.config['SERVICE_NAME']
         }
 
         super().__init__(message=message, status_code=status_code, status_message=status_message, payload=_payload)
@@ -25,7 +25,7 @@ class BasePostRequestTemplate:
         self.response_message = ''
 
     def _validate_request(self, required_params=[], optional_params=[]):
-        req_data: dict = request.get_json()
+        req_data: dict = request.get_json(silent=True)
 
         if req_data is None:
             raise ServiceInvalidUsage(message=ErrorMessage.EMPTY_POST_DATA)

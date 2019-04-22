@@ -1,8 +1,11 @@
 import os
 from flask import Flask, request
 
+from app.libs.mysql_wrapper import MySQLWrapper
 from app.commons.exceptions import NotAllowed, NotFound, InvalidUsage, Unauthorized
 from config import Config as DefaultConfig
+
+mysql_db = MySQLWrapper()
 
 
 def create_app(config_name):
@@ -14,12 +17,20 @@ def create_app(config_name):
     app.config.from_object(DefaultConfig)  # Default settings
     app.config.from_pyfile(cfg)
 
+    # Setup database
+    mysql_db.init_app(app)
+
     # Register blueprints
     from .api_v1 import api as api_blueprint
     from .api_v2 import api as api_blueprint2
 
     app.register_blueprint(api_blueprint, url_prefix='/api/v1')
     app.register_blueprint(api_blueprint2, url_prefix='/api/v2')
+
+    # Hello endpoint
+    @app.route('/hello', methods=['GET'])
+    def hello():
+        return 'Hello, Got It'
 
     # Handle request events
     @app.before_request

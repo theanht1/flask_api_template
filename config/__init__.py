@@ -8,7 +8,7 @@ class Config(object):
     TESTING = False
     JSONIFY_PRETTYPRINT_REGULAR = False
 
-    SERVICE_NAME = 'seo_platform_api'
+    SERVICE_NAME = 'flask_api_service'
 
     # Data base configuration
     MONGODB_URI = 'mongodb://localhost:27017'
