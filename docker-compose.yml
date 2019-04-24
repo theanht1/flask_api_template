@@ -1,0 +1,47 @@
+version: '3'
+services:
+  # Flask app
+  app:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+    container_name: app_flask_template
+    env_file: docker/app/app.conf
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    restart: always
+    networks:
+      - app-network
+    depends_on:
+      - db
+
+  # Nginx service
+  webserver:
+    image: nginx:latest
+    container_name: webserver_flask_template
+    restart: always
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d/
+    ports:
+      - '8000:80'
+    networks:
+      - app-network
+    depends_on:
+      - app
+
+  # Mongodb
+  db:
+    image: mongo:latest
+    container_name: database_flask_template
+    restart: always
+    networks:
+      - app-network
+    expose:
+      - 27017
+
+# Docker networks
+networks:
+  app-network:
+    driver: bridge

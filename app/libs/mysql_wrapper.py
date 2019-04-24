@@ -15,9 +15,9 @@ class MySQLWrapper:
         self.conf = {
             'user': current_app.config.get('MYSQL_DATABASE_USERNAME'),
             'password': current_app.config.get('MYSQL_DATABASE_PASSWORD'),
-            'host': current_app.config.get('MYSQL_DATABASE_HOST'),
+            'host': current_app.config.get('MYSQL_DATABASE_HOST', '127.0.0.1'),
             'database': current_app.config.get('MYSQL_DATABASE_NAME'),
-            'port': current_app.config.get('MYSQL_DATABASE_PORT')
+            'port': current_app.config.get('MYSQL_DATABASE_PORT', '3306')
         }
         self.connect()
 
