@@ -3,6 +3,11 @@ from app.commons.api_template import BaseGetRequestTemplate, BasePostRequestTemp
 
 class GetRequestTemplateV2(BaseGetRequestTemplate):
     def __init__(self, request_data={}):
+        """
+        Include api version to the response data
+
+        :param request_data:
+        """
         super().__init__(request_data)
 
         self.response_meta_data = {
@@ -15,6 +20,11 @@ class GetRequestTemplateV2(BaseGetRequestTemplate):
 
 class PostRequestTemplateV2(BasePostRequestTemplate):
     def __init__(self, request_data={}):
+        """
+        Include api version to the response data
+
+        :param request_data:
+        """
         super().__init__(request_data)
 
         self.response_meta_data = {

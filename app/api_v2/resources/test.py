@@ -3,6 +3,7 @@ This module is only for unit testing
 """
 
 from . import GetRequestTemplateV2, PostRequestTemplateV2
+
 from app.commons.decorators.authentication import required_basic_authentication
 
 from .. import api
@@ -10,7 +11,13 @@ from .. import api
 __resource_name__ = '/tests'
 
 
+# --- Models to handle api endpoints ---
+
 class GetTest(GetRequestTemplateV2):
+    """
+    Test /GET request
+    """
+
     def main_logic(self):
         self.response_message = 'Tested successfully'
         self.response_data = {
@@ -19,6 +26,10 @@ class GetTest(GetRequestTemplateV2):
 
 
 class PostTest(PostRequestTemplateV2):
+    """
+    Test /POST request
+    """
+
     def main_logic(self):
         self.response_message = 'Tested successfully'
         self.response_data = {
@@ -26,7 +37,10 @@ class PostTest(PostRequestTemplateV2):
         }
 
 
+# --- API endpoints ---
+
 @api.route('{}'.format(__resource_name__), methods=['GET'])
+@required_basic_authentication
 def get_test():
     test = GetTest()
 

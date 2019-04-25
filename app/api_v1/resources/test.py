@@ -11,7 +11,13 @@ from .. import api
 __resource_name__ = '/tests'
 
 
+# --- Models to handle api endpoints ---
+
 class GetTest(GetRequestTemplateV1):
+    """
+    Test /GET request
+    """
+
     def main_logic(self):
         self.response_message = 'Tested successfully'
         self.response_data = {
@@ -20,12 +26,18 @@ class GetTest(GetRequestTemplateV1):
 
 
 class PostTest(PostRequestTemplateV1):
+    """
+    Test /POST request
+    """
+
     def main_logic(self):
         self.response_message = 'Tested successfully'
         self.response_data = {
             'message': 'Just for testing post method'
         }
 
+
+# --- API endpoints ---
 
 @api.route('{}'.format(__resource_name__), methods=['GET'])
 @required_basic_authentication

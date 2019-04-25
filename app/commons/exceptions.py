@@ -25,6 +25,14 @@ class _BaseException(Exception):
     status_message = ErrorMessage.ERROR
 
     def __init__(self, message, status_code=None, status_message=None, payload=None):
+        """
+        Customize the response exception
+
+        :param message: <string> Message field in the response body
+        :param status_code: <number> HTTP status code
+        :param status_message: <string> Status text for the response
+        :param payload: <dict> Json body data
+        """
         self.message = message
 
         if status_code is not None:
@@ -36,6 +44,10 @@ class _BaseException(Exception):
         self.payload = payload
 
     def to_dict(self):
+        """
+        Convert the response to dictionary format
+        :return:
+        """
         rv = dict(self.payload or ())
         rv['message'] = self.message
 
@@ -45,26 +57,42 @@ class _BaseException(Exception):
         return rv
 
     def to_response(self):
+        """
+        Response to client Json format
+        :return:
+        """
         resp = jsonify(self.to_dict())
 
         return make_response(resp, self.status_code)
 
 
 class NotFound(_BaseException):
+    """
+    404 Not Found
+    """
     status_code = _StatusCode.NOT_FOUND
     status_message = _ErrorStatus.NOT_FOUND
 
 
 class NotAllowed(_BaseException):
+    """
+    405 Method Not Allowed
+    """
     status_code = _StatusCode.NOT_ALLOWED
     status_message = _ErrorStatus.NOT_ALLOWED
 
 
 class InvalidUsage(_BaseException):
+    """
+    400 Bad request
+    """
     status_code = _StatusCode.BAD_REQUEST
     status_message = _ErrorStatus.FAILURE
 
 
 class Unauthorized(_BaseException):
+    """
+    401 Unauthorized request
+    """
     status_code = _StatusCode.UNAUTHORIZED
     status_message = _ErrorStatus.UNAUTHORIZED

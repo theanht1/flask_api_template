@@ -5,6 +5,7 @@ from app.libs.mysql_wrapper import MySQLWrapper
 from app.commons.exceptions import NotAllowed, NotFound, InvalidUsage, Unauthorized
 from config import Config as DefaultConfig
 
+# Create mysql connection instance
 mysql_db = MySQLWrapper()
 
 
