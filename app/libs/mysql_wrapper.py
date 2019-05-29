@@ -102,7 +102,7 @@ class MySQLWrapper:
 
         return self.cur
 
-    def getOne(self, table=None, fields='*', where=None, order=None, limit=(0, 1)):
+    def get_one(self, table=None, fields='*', where=None, order=None, limit=(0, 1)):
         """
         Get single result
 
@@ -125,7 +125,7 @@ class MySQLWrapper:
 
         return row
 
-    def getAll(self, table=None, fields='*', where=None, order=None, limit=None):
+    def get_all(self, table=None, fields='*', where=None, order=None, limit=None):
         """
         Get all results
 
