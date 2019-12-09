@@ -13,8 +13,6 @@ services:
     restart: always
     networks:
       - app-network
-    depends_on:
-      - db
 
   # Nginx service
   webserver:
@@ -28,18 +26,6 @@ services:
       - '8000:80'
     networks:
       - app-network
-    depends_on:
-      - app
-
-  # Mongodb
-  db:
-    image: mongo:latest
-    container_name: database_flask_template
-    restart: always
-    networks:
-      - app-network
-    expose:
-      - 27017
 
 # Docker networks
 networks:

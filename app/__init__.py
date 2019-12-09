@@ -1,37 +1,37 @@
-import os
 from flask import Flask, request
+from flask_cors import CORS
 
-from app.libs.mysql_wrapper import MySQLWrapper
 from app.commons.exceptions import NotAllowed, NotFound, InvalidUsage, Unauthorized
-from config import Config as DefaultConfig
+from config.development import DevelopmentConfig
+from config.production import ProductionConfig
+from config.test import TestConfig
 
-# Create mysql connection instance
-mysql_db = MySQLWrapper()
+# Configs
+configs = {
+    'development': DevelopmentConfig,
+    'production': ProductionConfig,
+    'test': TestConfig,
+}
 
 
 def create_app(config_name):
     """Create an application instance."""
     app = Flask(__name__)
+    # CORS
+    CORS(app)
 
     # Apply configuration
-    cfg = os.path.join(os.getcwd(), 'config', config_name + '.py')
-    app.config.from_object(DefaultConfig)  # Default settings
-    app.config.from_pyfile(cfg)
-
-    # Setup database
-    mysql_db.init_app(app)
+    app.config.from_object(configs.get(config_name))
 
     # Register blueprints
-    from .api_v1 import api as api_blueprint
-    from .api_v2 import api as api_blueprint2
+    from .controllers import api as api_blueprint
 
     app.register_blueprint(api_blueprint, url_prefix='/api/v1')
-    app.register_blueprint(api_blueprint2, url_prefix='/api/v2')
 
     # Hello endpoint
     @app.route('/hello', methods=['GET'])
     def hello():
-        return 'Hello, Got It'
+        return 'Hello'
 
     # Handle request events
     @app.before_request
@@ -40,32 +40,22 @@ def create_app(config_name):
         if request.method == 'OPTIONS':
             return None
 
-    # Handle request errors
-    common_payload = {
-        '_meta': {
-            'service_name': DefaultConfig.SERVICE_NAME
-        }
-    }
-
     @app.errorhandler(401)
     def unauthorized(error):
         return Unauthorized(
             message="Bad username or password",
-            payload=common_payload
         ).to_response()
 
     @app.errorhandler(404)
     def not_found(error):
         return NotFound(
             message="Resource was not found",
-            payload=common_payload
         ).to_response()
 
     @app.errorhandler(405)
     def not_allowed(error):
         return NotAllowed(
             message="Method was not allowed",
-            payload=common_payload
         ).to_response()
 
     @app.errorhandler(InvalidUsage)

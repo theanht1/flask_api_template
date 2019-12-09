@@ -1,11 +1,7 @@
-ENV = 'development'
-DEBUG = True
+from config import Config
 
-MONGO_DATABASE_URI = 'mongodb://db:27017'
-MONGO_DATABASE_NAME = 'flask_api_template_test'
 
-MYSQL_DATABASE_USERNAME = 'root'
-MYSQL_DATABASE_PASSWORD = '123456'
-MYSQL_DATABASE_HOST = '192.168.0.1'
-MYSQL_DATABASE_PORT = '3308'
-MYSQL_DATABASE_NAME = 'mysql'
+class DevelopmentConfig(Config):
+    ENV = 'development'
+    DEBUG = True
+
