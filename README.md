@@ -3,14 +3,19 @@ Simple framework for building REST api with Flask
 
 ## Installation
 #### Python virtual environment
+```shell script
+python3 -m venv venv
+source venv/bin/activate
 ```
-$ python3 -m venv venv
-$ source venv/bin/activate
+or Conda
+```shell script
+conda create --name python3.7 python=3.7
+conda activate python3.7
 ```
 
 #### Lib dependencies
 ```
-pip install -r requirements/common.txt 
+pip install -r requirements/dev.txt 
 ```
 
 ## Usage
@@ -18,7 +23,7 @@ Configure the environment variables in folder `/config`
 
 Run the flask app
 ```
-python run.py
+python run.py [port]
 ```
  
  ## Run with docker
