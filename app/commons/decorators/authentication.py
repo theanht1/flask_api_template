@@ -1,7 +1,7 @@
 import base64
 import re
-
 from functools import wraps
+
 from flask import current_app, request
 from werkzeug.exceptions import Unauthorized
 
@@ -14,8 +14,8 @@ def _validate_basic_authentication(username, password):
     :param password: <string> http basic authentication password
     :return:
     """
-    correct_username = current_app.config['USERNAME']
-    correct_password = current_app.config['PASSWORD']
+    correct_username = current_app.config["USERNAME"]
+    correct_password = current_app.config["PASSWORD"]
 
     return username == correct_username and password == correct_password
 
@@ -24,17 +24,19 @@ def _validate_basic_authentication(username, password):
 def required_basic_authentication(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        authentication_header = request.headers.get('Authorization')
+        authentication_header = request.headers.get("Authorization")
         if not authentication_header:
             raise Unauthorized()
 
         # Get authentication info
         try:
             # Extract the username and password form the request authorization header by remove prefix and decode it
-            authentication_str = re.split('^Basic ', authentication_header)[1]
-            authentication_decoded = base64.b64decode(authentication_str).decode('utf-8')
+            authentication_str = re.split("^Basic ", authentication_header)[1]
+            authentication_decoded = base64.b64decode(authentication_str).decode(
+                "utf-8"
+            )
 
-            username, password = authentication_decoded.split(':')
+            username, password = authentication_decoded.split(":")
 
         except (IndexError, ValueError):
             raise Unauthorized()

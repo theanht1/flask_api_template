@@ -2,6 +2,5 @@ from config import Config
 
 
 class DevelopmentConfig(Config):
-    ENV = 'development'
+    ENV = "development"
     DEBUG = True
-

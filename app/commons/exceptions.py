@@ -1,13 +1,20 @@
 from flask import jsonify, make_response
 
-from app.commons.enums import ErrorMessage, StatusCode, ErrorStatus
+from app.commons.enums import ErrorMessage, ErrorStatus, StatusCode
 
 
 class _BaseException(Exception):
     status_code = 0
     status_message = ErrorMessage.ERROR
 
-    def __init__(self, message, status_code=None, status_message=None, error_data=None, payload=None):
+    def __init__(
+        self,
+        message,
+        status_code=None,
+        status_message=None,
+        error_data=None,
+        payload=None,
+    ):
         """
         Customize the response exception
 
@@ -34,13 +41,13 @@ class _BaseException(Exception):
         :return:
         """
         rv = dict(self.payload or ())
-        rv['message'] = self.message
+        rv["message"] = self.message
 
         if self.error_data:
-            rv['error_data'] = self.error_data
+            rv["error_data"] = self.error_data
 
         if self.status_message is not None:
-            rv['status'] = self.status_message
+            rv["status"] = self.status_message
 
         return rv
 
@@ -58,6 +65,7 @@ class NotFound(_BaseException):
     """
     404 Not Found
     """
+
     status_code = StatusCode.NOT_FOUND
     status_message = ErrorStatus.NOT_FOUND
 
@@ -66,6 +74,7 @@ class NotAllowed(_BaseException):
     """
     405 Method Not Allowed
     """
+
     status_code = StatusCode.NOT_ALLOWED
     status_message = ErrorStatus.NOT_ALLOWED
 
@@ -74,6 +83,7 @@ class InvalidUsage(_BaseException):
     """
     400 Bad request
     """
+
     status_code = StatusCode.BAD_REQUEST
     status_message = ErrorStatus.FAILURE
 
@@ -82,5 +92,6 @@ class Unauthorized(_BaseException):
     """
     401 Unauthorized request
     """
+
     status_code = StatusCode.UNAUTHORIZED
     status_message = ErrorStatus.UNAUTHORIZED

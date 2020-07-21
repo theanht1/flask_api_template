@@ -4,14 +4,16 @@ from marshmallow import Schema, fields, post_dump
 
 class PaginationSchema(Schema):
     page = fields.Integer(validate=lambda n: n >= 1, required=False, default=1)
-    items_per_page = fields.Integer(validate=lambda n: n >= 1, required=False, default=10)
+    items_per_page = fields.Integer(
+        validate=lambda n: n >= 1, required=False, default=10
+    )
 
 
 class BaseResponse(Schema):
     @post_dump(pass_many=True)
     def wrap(self, data, many):
         return {
-            'data': data,
+            "data": data,
         }
 
     def jsonify(self, obj=None, many=False):

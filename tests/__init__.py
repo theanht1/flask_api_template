@@ -5,20 +5,22 @@ from base64 import b64encode
 class AppTestClient:
     def __init__(self, app, username, password):
         self.client = app.test_client()
-        self.auth = 'Basic ' + b64encode((username + ':' + password).encode('utf-8')).decode('utf-8')
+        self.auth = "Basic " + b64encode(
+            (username + ":" + password).encode("utf-8")
+        ).decode("utf-8")
 
     def send(self, url, request, data=None, headers=None):
         if not headers:
             headers = {}
-        headers['Authorization'] = self.auth
-        headers['Content-Type'] = 'application/json'
+        headers["Authorization"] = self.auth
+        headers["Content-Type"] = "application/json"
 
         # Convert json data to string
         data = json.dumps(data) if data else None
 
         rv = request(url, data=data, headers=headers)
 
-        return rv, json.loads(rv.data.decode('utf-8'))
+        return rv, json.loads(rv.data.decode("utf-8"))
 
     def get(self, url, headers=None):
         return self.send(url, self.client.get, headers=headers)

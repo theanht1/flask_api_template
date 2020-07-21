@@ -17,5 +17,5 @@ class ErrorStatus:
 
 
 class ErrorMessage:
-    INVALID_POST_DATA = 'Invalid request data'
+    INVALID_POST_DATA = "Invalid request data"
     ERROR = "ERROR"

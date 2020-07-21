@@ -9,6 +9,6 @@ def load_all_resources():
     from .v1 import test
 
 
-api = Blueprint('api', __name__)
+api = Blueprint("api", __name__)
 
 load_all_resources()
