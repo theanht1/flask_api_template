@@ -1,7 +1,13 @@
 from flask import Flask, request
 from flask_cors import CORS
 
-from app.commons.exceptions import InvalidUsage, NotAllowed, NotFound, Unauthorized
+from app.commons.exceptions import (
+    AppBaseException,
+    InvalidUsage,
+    NotAllowed,
+    NotFound,
+    Unauthorized,
+)
 from config.development import DevelopmentConfig
 from config.production import ProductionConfig
 from config.test import TestConfig
@@ -42,18 +48,22 @@ def create_app(config_name):
 
     @app.errorhandler(401)
     def unauthorized(error):
-        return Unauthorized(message="Bad username or password",).to_response()
+        return Unauthorized(message="Bad username or password").to_response()
 
     @app.errorhandler(404)
     def not_found(error):
-        return NotFound(message="Resource was not found",).to_response()
+        return NotFound(message="Resource was not found").to_response()
 
     @app.errorhandler(405)
     def not_allowed(error):
-        return NotAllowed(message="Method was not allowed",).to_response()
+        return NotAllowed(message="Method was not allowed").to_response()
 
     @app.errorhandler(InvalidUsage)
     def invalid_usage(error: InvalidUsage):
+        return error.to_response()
+
+    @app.errorhandler(AppBaseException)
+    def request_exception(error: AppBaseException):
         return error.to_response()
 
     return app

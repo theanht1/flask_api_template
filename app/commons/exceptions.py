@@ -3,7 +3,7 @@ from flask import jsonify, make_response
 from app.commons.enums import ErrorMessage, ErrorStatus, StatusCode
 
 
-class _BaseException(Exception):
+class AppBaseException(Exception):
     status_code = 0
     status_message = ErrorMessage.ERROR
 
@@ -61,7 +61,7 @@ class _BaseException(Exception):
         return make_response(resp, self.status_code)
 
 
-class NotFound(_BaseException):
+class NotFound(AppBaseException):
     """
     404 Not Found
     """
@@ -70,7 +70,7 @@ class NotFound(_BaseException):
     status_message = ErrorStatus.NOT_FOUND
 
 
-class NotAllowed(_BaseException):
+class NotAllowed(AppBaseException):
     """
     405 Method Not Allowed
     """
@@ -79,7 +79,7 @@ class NotAllowed(_BaseException):
     status_message = ErrorStatus.NOT_ALLOWED
 
 
-class InvalidUsage(_BaseException):
+class InvalidUsage(AppBaseException):
     """
     400 Bad request
     """
@@ -88,7 +88,7 @@ class InvalidUsage(_BaseException):
     status_message = ErrorStatus.FAILURE
 
 
-class Unauthorized(_BaseException):
+class Unauthorized(AppBaseException):
     """
     401 Unauthorized request
     """
