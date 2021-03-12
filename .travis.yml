@@ -4,5 +4,8 @@ python:
   - "3.7"
 install:
   - pip install -r requirements/dev.txt
+before_script:
+  - pip install coveralls PyYAML
 script:
-  - pytest tests
+  - coverage run -m pytest tests
+  - coveralls

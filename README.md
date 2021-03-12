@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/theanht1/flask_api_template.svg?branch=master)](https://travis-ci.com/theanht1/flask_api_template)
+[![Coverage Status](https://coveralls.io/repos/github/theanht1/flask_api_template/badge.svg?branch=master)](https://coveralls.io/github/theanht1/flask_api_template?branch=master)
 
 # Introduction
 Simple framework for building REST api with Flask 
