@@ -1,3 +1,27 @@
+[tool.poetry]
+name = "flask_api_template"
+version = "1.0.0"
+description = "Bootstrap template for fast Flask API development"
+authors = ["Anh Mai <theanht1k20@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+Flask = "^1.1.2"
+Flask-Cors = "^3.0.10"
+marshmallow = "^3.10.0"
+gunicorn = "^20.0.4"
+
+[tool.poetry.dev-dependencies]
+coverage = "^5.5"
+pytest = "^6.2.2"
+pytest-mock = "^3.5.1"
+pre-commit = "^2.11.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.black]
 line-length = 88
 target-version = ['py36', 'py37', 'py38']

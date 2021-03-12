@@ -2,7 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/theanht1/flask_api_template/badge.svg?branch=master)](https://coveralls.io/github/theanht1/flask_api_template?branch=master)
 
 # Introduction
-Simple framework for building REST api with Flask 
+Simple framework for building REST API with Flask 
 
 ## Installation
 #### Python virtual environment
@@ -18,7 +18,8 @@ conda activate python3.7
 
 #### Lib dependencies
 ```
-pip install -r requirements/dev.txt 
+pip install poetry
+poetry install
 ```
 
 ## Usage
